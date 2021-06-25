@@ -4,11 +4,14 @@ import { Image, Platform, StyleSheet, TextInput, TouchableOpacity, View } from '
 import checkIcon from '../assets/icons/Check.png';
 
 interface TodoInputProps {
+  darkMode: boolean;
   addTask: (task: string) => void;
 }
 
-export function TodoInput({ addTask }: TodoInputProps) {
+export function TodoInput({ addTask, darkMode }: TodoInputProps) {
   const [task, setTask] = useState('');
+
+  const styles = darkMode ? stylesDark : stylesDefault;
 
   function handleAddNewTask() {
     addTask(task);
@@ -24,6 +27,7 @@ export function TodoInput({ addTask }: TodoInputProps) {
         value={task}
         onChangeText={setTask}
         onSubmitEditing={handleAddNewTask}
+        placeholderTextColor={darkMode ? "#A09CB1" : "#A09CB1"}
       />
       <TouchableOpacity
         testID="add-new-task-button"
@@ -37,7 +41,7 @@ export function TodoInput({ addTask }: TodoInputProps) {
   )
 }
 
-const styles = StyleSheet.create({
+const stylesDefault = StyleSheet.create({
   inputContainer: {
     backgroundColor: '#F5F4F8',
     borderRadius: 5,
@@ -68,6 +72,47 @@ const styles = StyleSheet.create({
   },
   addButton: {
     backgroundColor: '#3FAD27',
+    height: 50,
+    paddingHorizontal: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderTopRightRadius: 5,
+    borderBottomRightRadius: 5,
+  },
+});
+
+const stylesDark = StyleSheet.create({
+  inputContainer: {
+    backgroundColor: '#34313D',
+    borderRadius: 5,
+    marginTop: -25,
+    marginHorizontal: 40,
+    height: 50,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  input: {
+    color: "#FFF",
+    flex: 1,
+    backgroundColor: '#34313D',
+    paddingLeft: 12,
+    borderTopLeftRadius: 5,
+    borderBottomLeftRadius: 5,
+  },
+  inputIOSShadow: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84
+  },
+  inputAndroidShadow: {
+    elevation: 5
+  },
+  addButton: {
+    backgroundColor: '#988BC7',
     height: 50,
     paddingHorizontal: 16,
     justifyContent: 'center',
